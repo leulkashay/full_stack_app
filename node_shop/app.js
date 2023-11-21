@@ -10,9 +10,10 @@ const orderRoutes = require('./routes/order');
 const productRoutes = require('./routes/product');
 
 //middleware
-app.use(bodyParser.json({limit: "30mb", exyended: true}));
-app.use(bodyParser.urlencoded({limit: "30mb", extended: true}));
+app.use(bodyParser.json({limit: "30mb", extended: true}));
+app.use(bodyParser.urlencoded({limit: "30mb", extended: false}));
 app.use(morgan('dev'));
+
 mongoose.connect(process.env.MONGO_URI, {
    useNewUrlParser: true,
     useUnifiedTopology: false,
@@ -26,9 +27,7 @@ mongoose.connection.once('open', () => {
 
 
 //route
-app.use('/', (req, res, next) => {
-    res.send("It works")
-})
+
 
 app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);

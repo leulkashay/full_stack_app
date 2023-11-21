@@ -1,29 +1,29 @@
-const express = require('express');
-
 const Product = require('../models/product.model');
 
-const router = express.Router();
-
-
-router.get('/', (req, res, next) => {
+const getProduct = ('/', (req, res, next) => {
     res.status(200).json({
        message: "product get"
     })
 });
-router.post('/', (req, res, next) => {
+const createproduct = ((req, res, next) => {
    res.status(201).json({
        message: "cerated product"
    })
 });
-router.patch('/', (req, res, next) => {
+const updateProduct = ((req, res, next) => {
+    const id = req.params.productId;
    res.json({
-       message: "product updated"
-   })
-});
-router.delete('/', (req, res, next) => {
-   res.status(200).json({
-       message: "product deleted"
+       message: "product updated",
+       id: id
    })
 });
 
-module.exports = router;
+const deleteProduct = ((req, res, next) => {
+    const id = req.params.productId;
+    res.status(200).json({
+       message: "product deleted",
+       id: id
+   })
+});
+
+module.exports = {getProduct, createproduct, updateProduct, deleteProduct}
