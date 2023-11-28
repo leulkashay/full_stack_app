@@ -1,4 +1,7 @@
+const mongoose = require('mongoose');
+
 const Product = require('../models/product.model');
+
 
 const getProduct = ('/', (req, res, next) => {
     res.status(200).json({
@@ -6,13 +9,28 @@ const getProduct = ('/', (req, res, next) => {
     })
 });
 const createproduct = ((req, res, next) => {
-   res.status(201).json({
+    
+    const product = new Product({
+        _id: new mongoose.Types.ObjectId(),
+        name: req.body.name,
+        price: req.body.price
+    });
+
+    product
+        .save()
+        .then((result) =>{
+            console.log(result);
+        })
+        .catch(err => console.log(err))
+
+    res.status(201).json({
        message: "cerated product"
-   })
+   });
 });
+
 const updateProduct = ((req, res, next) => {
     const id = req.params.productId;
-   res.json({
+    res.json({
        message: "product updated",
        id: id
    })
@@ -20,6 +38,7 @@ const updateProduct = ((req, res, next) => {
 
 const deleteProduct = ((req, res, next) => {
     const id = req.params.productId;
+
     res.status(200).json({
        message: "product deleted",
        id: id
